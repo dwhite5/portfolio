@@ -1,7 +1,39 @@
+import { readdirSync, readFileSync } from "fs";
+import { join } from "path";
+import Link from "next/link";
+import matter from "gray-matter";
+
+type CardItem = {
+  slug: string;
+  title: string;
+  summary: string;
+};
+
+function loadItems(contentType: "projects" | "case-studies"): CardItem[] {
+  const dir = join(process.cwd(), "content", contentType);
+  return readdirSync(dir)
+    .filter((f) => f.endsWith(".md"))
+    .map((f) => {
+      const raw = readFileSync(join(dir, f), "utf-8");
+      const { data } = matter(raw);
+      return {
+        slug: f.replace(/\.md$/, ""),
+        title: data.title as string,
+        summary: data.summary as string,
+      };
+    });
+}
+
 export default function Home() {
+  const projects = loadItems("projects");
+  const caseStudies = loadItems("case-studies");
+
   return (
     <div className="min-h-screen bg-white dark:bg-zinc-950 font-sans">
-      <main className="mx-auto max-w-3xl px-6 py-24">
+      <main className="mx-auto max-w-4xl px-6 py-24">
+        {/* Banner */}
+        <div className="mb-16 h-48 w-full rounded-lg bg-zinc-100 dark:bg-zinc-800" />
+
         {/* Hero */}
         <section className="mb-24">
           <h1 className="text-4xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50 mb-3">
@@ -18,14 +50,19 @@ export default function Home() {
             Projects
           </h2>
           <div className="space-y-4">
-            {[1, 2, 3].map((i) => (
-              <div
-                key={i}
-                className="rounded-lg border border-zinc-200 dark:border-zinc-800 p-5"
+            {projects.map((item) => (
+              <Link
+                key={item.slug}
+                href={`/projects/${item.slug}`}
+                className="block rounded-lg border border-zinc-200 p-5 transition-colors hover:border-zinc-400 dark:border-zinc-800 dark:hover:border-zinc-600"
               >
-                <div className="h-4 w-1/3 rounded bg-zinc-100 dark:bg-zinc-800 mb-2" />
-                <div className="h-3 w-2/3 rounded bg-zinc-100 dark:bg-zinc-800" />
-              </div>
+                <p className="text-sm font-medium text-zinc-900 dark:text-zinc-50">
+                  {item.title}
+                </p>
+                <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
+                  {item.summary}
+                </p>
+              </Link>
             ))}
           </div>
         </section>
@@ -36,14 +73,19 @@ export default function Home() {
             Case Studies
           </h2>
           <div className="space-y-4">
-            {[1, 2].map((i) => (
-              <div
-                key={i}
-                className="rounded-lg border border-zinc-200 dark:border-zinc-800 p-5"
+            {caseStudies.map((item) => (
+              <Link
+                key={item.slug}
+                href={`/case-studies/${item.slug}`}
+                className="block rounded-lg border border-zinc-200 p-5 transition-colors hover:border-zinc-400 dark:border-zinc-800 dark:hover:border-zinc-600"
               >
-                <div className="h-4 w-1/3 rounded bg-zinc-100 dark:bg-zinc-800 mb-2" />
-                <div className="h-3 w-2/3 rounded bg-zinc-100 dark:bg-zinc-800" />
-              </div>
+                <p className="text-sm font-medium text-zinc-900 dark:text-zinc-50">
+                  {item.title}
+                </p>
+                <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
+                  {item.summary}
+                </p>
+              </Link>
             ))}
           </div>
         </section>
