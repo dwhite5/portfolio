@@ -3,7 +3,7 @@ title: "Designing a Dashboard"
 summary: "Rethinking how users monitor and act on real-time data."
 date: "January 8, 2026"
 topic: "UX Design"
-tools:
+concepts:
   - Figma
   - React
   - Recharts

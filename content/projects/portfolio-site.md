@@ -3,7 +3,7 @@ title: "This Portfolio Site"
 summary: "A minimal portfolio built with Next.js and plain Markdown files."
 date: "May 30, 2026"
 topic: "Web Development"
-tools:
+concepts:
   - Next.js
   - TypeScript
   - Tailwind CSS

@@ -3,7 +3,7 @@ title: "Open Source CLI Tool"
 summary: "A command-line utility for automating repetitive local development tasks."
 date: "February 20, 2026"
 topic: "Developer Tools"
-tools:
+concepts:
   - Node.js
   - TypeScript
   - Commander.js

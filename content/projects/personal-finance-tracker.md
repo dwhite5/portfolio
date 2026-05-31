@@ -3,7 +3,7 @@ title: "Personal Finance Tracker"
 summary: "A lightweight app for tracking spending without connecting to a bank."
 date: "December 5, 2025"
 topic: "Web App"
-tools:
+concepts:
   - Next.js
   - SQLite
   - Tailwind CSS

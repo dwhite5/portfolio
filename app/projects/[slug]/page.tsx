@@ -3,7 +3,9 @@ import { readFileSync, readdirSync } from "fs";
 import { join } from "path";
 import matter from "gray-matter";
 import Breadcrumb from "@/app/components/Breadcrumb";
+import ArticleLightbox from "@/app/components/ArticleLightbox";
 import { remark } from "remark";
+import remarkGfm from "remark-gfm";
 import remarkHtml from "remark-html";
 
 type ProjectMetadata = {
@@ -11,7 +13,7 @@ type ProjectMetadata = {
   summary: string;
   date: string;
   topic: string;
-  tools: string[];
+  concepts: string[];
   githubUrl?: string;
 };
 
@@ -28,7 +30,7 @@ async function loadProject(slug: string) {
 
   const { data, content } = matter(raw);
   const html = (
-    await remark().use(remarkHtml, { sanitize: false }).process(content)
+    await remark().use(remarkGfm).use(remarkHtml, { sanitize: false }).process(content)
   ).toString();
 
   return { metadata: data as ProjectMetadata, html };
@@ -85,10 +87,7 @@ export default async function ProjectPage({
         {/* Body + Sidebar */}
         <div className="flex flex-col gap-12 lg:flex-row lg:gap-16">
           {/* Article */}
-          <article
-            className="max-w-[65ch] flex-1 [&>h2]:mb-3 [&>h2]:mt-10 [&>h2]:text-lg [&>h2]:font-semibold [&>h2]:tracking-tight [&>h2]:text-zinc-900 dark:[&>h2]:text-zinc-50 [&>p]:mb-4 [&>p]:leading-7 [&>p]:text-zinc-600 dark:[&>p]:text-zinc-400"
-            dangerouslySetInnerHTML={{ __html: html }}
-          />
+          <ArticleLightbox html={html} />
 
           {/* Sidebar */}
           <aside className="shrink-0 space-y-6 lg:w-48">
@@ -102,12 +101,12 @@ export default async function ProjectPage({
             </div>
             <div>
               <p className="text-xs font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">
-                Tools & Concepts
+                Concepts
               </p>
               <ul className="mt-1 space-y-1">
-                {metadata.tools.map((tool) => (
-                  <li key={tool} className="text-sm text-zinc-700 dark:text-zinc-300">
-                    {tool}
+                {metadata.concepts.map((concept) => (
+                  <li key={concept} className="text-sm text-zinc-700 dark:text-zinc-300">
+                    {concept}
                   </li>
                 ))}
               </ul>

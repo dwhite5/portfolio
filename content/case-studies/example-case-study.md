@@ -3,7 +3,7 @@ title: "Example Case Study"
 summary: "A one-line description of what this project was about."
 date: "May 15, 2026"
 topic: "Product Design"
-tools:
+concepts:
   - Figma
   - React
   - TypeScript

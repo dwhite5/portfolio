@@ -3,7 +3,7 @@ title: "Improving an Onboarding Flow"
 summary: "Reducing drop-off during signup by cutting steps and clarifying intent."
 date: "March 3, 2026"
 topic: "Product Design"
-tools:
+concepts:
   - Figma
   - Hotjar
   - Notion
