@@ -2,6 +2,7 @@ import { readdirSync, readFileSync } from "fs";
 import { join } from "path";
 import Link from "next/link";
 import matter from "gray-matter";
+import AnimatedGradient from "@/app/components/AnimatedGradient";
 
 type CardItem = {
   slug: string;
@@ -32,7 +33,7 @@ export default function Home() {
     <div className="min-h-screen bg-white dark:bg-zinc-950 font-sans">
       <main className="mx-auto max-w-4xl px-6 py-24">
         {/* Banner */}
-        <div className="mb-16 h-48 w-full rounded-lg bg-zinc-100 dark:bg-zinc-800" />
+        <AnimatedGradient className="mb-16 h-48 w-full" />
 
         {/* Hero */}
         <section className="mb-24">
