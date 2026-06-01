@@ -3,6 +3,7 @@ import { join } from "path";
 import Link from "next/link";
 import matter from "gray-matter";
 import Breadcrumb from "../components/Breadcrumb";
+import AnimatedGradient, { caseStudyBlobs } from "../components/AnimatedGradient";
 
 export default function CaseStudiesIndex() {
   const dir = join(process.cwd(), "content/case-studies");
@@ -20,6 +21,7 @@ export default function CaseStudiesIndex() {
   return (
     <div className="min-h-screen bg-white dark:bg-zinc-950">
       <main className="mx-auto max-w-4xl px-6 py-16">
+        <AnimatedGradient className="mb-10 h-48 w-full" blobs={caseStudyBlobs} />
         <Breadcrumb crumbs={[{ label: "Home", href: "/" }, { label: "Case Studies" }]} />
         <h1 className="text-3xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50 mb-10">
           Case Studies
