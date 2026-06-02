@@ -7,52 +7,93 @@ concepts:
   - Memory
   - Basic tool use
 ---
-Assignment 2 was about three things: 
-- Query classification
-- Tool use
-- Memory
 
+# Summary
+
+This article walks through a case study to build an agentic system with the following capabilities: 
+1. Query classification
+2. Tool use
+3. Memory
+
+Each capability was built on its own before progressing to the next capability. 
 
 # Query classification
 
 *Query classification* is the task of assigning an input to a predefined category. The resulting category allows the input to be routed to the most appropriate downstream path. 
 
-This can have several use cases in agentic systems: 
+Classification has several use cases in agentic systems: 
 1. Directing easy questions to small, cost-efficient models and hard questions to larger, more capable models. 
 2. Routing different types of customer queries (invoices, payments, login issues) to different downstream processes.
 3. Choosing which specialized sub-agent a task should be given to. 
 4. Filtering out queries that should not enter the system at all (malicious, out of scope). 
 
-## Process
-The case study began by constructing a simple, linear workflow with no classification. This consisted of the following Langflow components: 
+## V1
 
-1. **Chat input** to accept user input. 
-2. **Prompt template** to structure system prompt for the LLM. 
-3. **Language model** to send LLM request. 
-4. **Chat output** to return LLM response to the user. 
+The first iteration had a simple goal of classifying user input as either "happy" or "sad" and returning the result to the user. This was a straightforward goal where the system prompt could be easily written by hand. 
 
+```
+System prompt:
+Classify the user's input as happy or sad. Only output one word.
+```
 
-![Alt text](/images/case-studies/A2-1.png)
+![V1 flow](/images/case-studies/A2-1.png)
+![V1 flow conversation](/images/case-studies/A2-2.png)
 
+## V2
 
-The warmup started by a basic, linear control flow to get the juices flowing. It used the following Langflow components: 
+The second iteration built on the first by adding templates to format the system output differently for "happy" and "sad" answers. The classification prompt was kept the same. The main addition was an if-else component that routed the flow to the correct template based on the classification result. 
 
-1. Chat input - Collects user input as a chat message
-2. Prompt template  - String with dynamic variables to fill the system prompt for the language model. 
-3. Language model - LLM call configured with API key to access OpenAI models via API. 
-4. Chat output - Emits LLM output as a chat message
-
-Once the linear flow was successfully wired and validated, the next step was to introduce simple version of query classification. 
-
-At its core, this entails routing to 
+![V2 flow](/images/case-studies/A2-3.png)
+![V2 flow conversation](/images/case-studies/A2-4.png)
 
 
-For the language model component, I selected gpt-5-nano because it's small and fast. Classifying a 
+## V3
+
+The third iteration expanded to a more complex goal of classifying a user question into one of four question types: 
+
+- Factual (what is....?, who invented...?)
+- Analytical (how does...? why do...?)
+- Comparison (what's the difference between...?)
+- Definition (define..., explain...)
 
 
-The next step was to split this linear flow into two possible outcomes with an If-Else component. This component routes the flow to a corresponding path based on a simple text comparison. In this case, the prior model call was classifying the user input as "happy" or "sad". The If-Else was set up to determine if the input was equal to "happy." True results were routed to a "happy" path (no pun intended), while false results were routed to a sad path. 
+**Talk about prompt engineering, the first few hand-crafted prompts, then transitioning to meta-prompting.**
 
-This was the first implementation of query classification: classifying a user input, then using the result to route control to the appropriate path. 
+The initial design task was to create a system prompt that would instruct the LLM to classify user questions into the appropriate category. 
+
+provide a sufficiently detailed system prompt for the LLM to categorize user inputs into the correct question type. I wrote the initial system prompt by hand and manually tested it by entering different user prompts in the Langflow playground. This revealed gaps in the system prompt: the LLM classifier would return multiple categories, unpredictable formats, or inconsistent answers for similar inputs. 
+
+This led to harnessing a technique known as "meta-prompting" where instead of writing a prompt by hand, you describe the desired output and have the LLM generate it for you. This produced a much more elegant, cohesive, and effective prompt than my initial attempt. 
+
+![V2 meta prompting](/images/case-studies/A2-5.png)
+
+A few design choices were important: 
+
+- Concrete examples so LLMs could pattern match for more reliable results. 
+- Explicit output format rules to generate a predictable value for downstream parsing. 
+- Tie-breaking rule to prevent the model from stalling or outputting multiple category labels. 
+
+```
+System prompt:
+
+You are a query classifier. Your job is to read a user input and assign it to exactly one of the following categories:
+
+- `factual`: Questions asking for a specific fact, figure, or piece of information. Example: "What is the capital of France?" or "Who invented the telephone?"
+- `analytical`: Questions asking how or why something works, happens, or exists. Example: "How does photosynthesis work?" or "Why do interest rates affect inflation?"
+- `comparison`: Questions asking for similarities or differences between two or more things. Example: "What's the difference between TCP and UDP?" or "How does React compare to Vue?"
+- `definition`: Requests to define, explain, or describe what something is. Example: "Define machine learning." or "Explain what a neural network is."
+
+Rules:
+
+- Respond with only the category label: `factual`, `analytical`, `comparison`, or `definition`.
+- Do not include any explanation, punctuation, or additional text.
+- If the input could fit multiple categories, choose the best single match.
+
+```
+
+
+
+
 
 
 

@@ -31,7 +31,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white dark:bg-zinc-950 font-sans">
-      <main className="mx-auto max-w-4xl px-6 py-24">
+      <main className="mx-auto max-w-4xl px-6 py-16">
         {/* Banner */}
         <AnimatedGradient className="mb-16 h-48 w-full" />
 
