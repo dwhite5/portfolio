@@ -30,14 +30,14 @@ export default function Home() {
   const caseStudies = loadItems("case-studies");
 
   return (
-    <div className="min-h-screen bg-white dark:bg-zinc-950 font-sans">
-      <main className="mx-auto max-w-4xl px-6 py-16">
+    <div className="bg-white dark:bg-zinc-950 font-sans">
+      <main className="mx-auto max-w-4xl px-6 py-8 sm:py-16">
         {/* Banner */}
-        <AnimatedGradient className="mb-16 h-48 w-full" />
+        <AnimatedGradient className="mb-8 sm:mb-16 h-36 sm:h-48 w-full" />
 
         {/* Hero */}
-        <section className="mb-24">
-          <h1 className="text-4xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50 mb-3">
+        <section className="mb-12 sm:mb-24">
+          <h1 className="text-2xl sm:text-4xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50 mb-3">
             Dylan White
           </h1>
           <p className="text-lg text-zinc-500 dark:text-zinc-400">
@@ -46,7 +46,7 @@ export default function Home() {
         </section>
 
         {/* Projects */}
-        <section className="mb-20">
+        <section className="mb-12 sm:mb-20">
           <h2 className="text-xs font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-500 mb-6">
             Projects
           </h2>

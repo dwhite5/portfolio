@@ -248,10 +248,17 @@ body {
   background-color: #e4e4e7;
   border-radius: 0.5rem;
   padding: 0.5rem;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .dark .article-prose .article-gallery {
   background-color: #3f3f46;
+}
+
+.article-prose .article-gallery.cols-1 {
+  grid-template-columns: 1fr;
+  max-width: 50%;
 }
 
 .article-prose .article-gallery.cols-2 {

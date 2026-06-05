@@ -24,12 +24,12 @@ function applyGalleries(html: string): string {
     }
   );
 
-  // Case (b): consecutive <p><img/></p> siblings — group runs of 2+ into gallery divs
+  // Case (b): consecutive <p><img/></p> siblings — group runs of 1+ into gallery divs
   html = html.replace(
-    /((?:<p>\s*<img[^>]*>\s*<\/p>\s*){2,})/g,
+    /((?:<p>\s*<img[^>]*>\s*<\/p>\s*)+)/g,
     (run) => {
       const imgs = run.match(/<img[^>]*>/g) ?? [];
-      const cols = imgs.length === 2 ? "cols-2" : "cols-3";
+      const cols = imgs.length === 1 ? "cols-1" : imgs.length === 2 ? "cols-2" : "cols-3";
       return `<div class="article-gallery ${cols}">${imgs.join("")}</div>`;
     }
   );

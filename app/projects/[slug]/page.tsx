@@ -53,9 +53,9 @@ export default async function ProjectPage({
 
   return (
     <div className="min-h-screen bg-white dark:bg-zinc-950">
-      <main className="mx-auto max-w-4xl px-6 py-16">
+      <main className="mx-auto max-w-4xl px-6 py-8 sm:py-16">
         {/* Header */}
-        <div className="mb-10 max-w-[65ch]">
+        <div className="mb-4 sm:mb-10 max-w-[65ch]">
           <Breadcrumb crumbs={[{ label: "Home", href: "/" }, { label: "Projects", href: "/projects" }, { label: metadata.title }]} />
           <h1 className="text-3xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50">
             {metadata.title}
@@ -90,26 +90,33 @@ export default async function ProjectPage({
           <ArticleLightbox html={html} />
 
           {/* Sidebar */}
-          <aside className="shrink-0 space-y-6 lg:w-48">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">
-                Date
-              </p>
-              <p className="mt-1 text-sm text-zinc-700 dark:text-zinc-300">
-                {metadata.date}
-              </p>
+          <aside className="order-first lg:order-last shrink-0 lg:w-48">
+            {/* Mobile: two columns, each with label stacked above value */}
+            <div className="flex gap-5 lg:hidden">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">Date</p>
+                <p className="mt-0.5 text-sm text-zinc-700 dark:text-zinc-300">{metadata.date}</p>
+              </div>
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">Concepts</p>
+                <p className="mt-0.5 text-sm text-zinc-700 dark:text-zinc-300">{metadata.concepts.join(" | ")}</p>
+              </div>
             </div>
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">
-                Concepts
-              </p>
-              <ul className="mt-1 space-y-1">
-                {metadata.concepts.map((concept) => (
-                  <li key={concept} className="text-sm text-zinc-700 dark:text-zinc-300">
-                    {concept}
-                  </li>
-                ))}
-              </ul>
+
+            {/* Desktop: stacked sidebar */}
+            <div className="hidden lg:flex lg:flex-col lg:space-y-6">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">Date</p>
+                <p className="mt-1 text-sm text-zinc-700 dark:text-zinc-300">{metadata.date}</p>
+              </div>
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">Concepts</p>
+                <ul className="mt-1 space-y-1">
+                  {metadata.concepts.map((concept) => (
+                    <li key={concept} className="text-sm text-zinc-700 dark:text-zinc-300">{concept}</li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </aside>
         </div>

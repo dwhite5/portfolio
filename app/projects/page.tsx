@@ -20,10 +20,10 @@ export default function ProjectsIndex() {
 
   return (
     <div className="min-h-screen bg-white dark:bg-zinc-950">
-      <main className="mx-auto max-w-4xl px-6 py-16">
-        <AnimatedGradient className="mb-10 h-48 w-full" blobs={projectBlobs} />
+      <main className="mx-auto max-w-4xl px-6 py-8 sm:py-16">
+        <AnimatedGradient className="mb-8 sm:mb-10 h-36 sm:h-48 w-full" blobs={projectBlobs} />
         <Breadcrumb crumbs={[{ label: "Home", href: "/" }, { label: "Projects" }]} />
-        <h1 className="text-3xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50 mb-10">
+        <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50 mb-10">
           Projects
         </h1>
         <div className="space-y-4">
