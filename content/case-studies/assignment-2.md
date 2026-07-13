@@ -3,9 +3,8 @@ title: "Routing Smarter"
 summary: "What query classification taught me about prompt design."
 date: "May 30, 2026"
 concepts:
-  - Query classification
-  - Memory
-  - Basic tool use
+  - Classification
+  - Prompt engineering
 ---
 
 Query classification is a fundamental building block of agentic workflows. Before an agent can respond intelligently, it often needs to decide: what kind of input is this, and where should it go? 
@@ -16,13 +15,13 @@ This case study looks at a system I built to understand classification and what 
 
 ## What I was trying to build
 
-The goal was to build a workflow that could classify an incoming user query, route it to the appropriate downstream process, and format the response in a way that matched the nature of the question. 
-
-I wanted to learn this because classification has [several use cases](https://www.anthropic.com/engineering/building-effective-agents) in agentic systems: 
+My goal was to get hands-on experience with classification, which has [several use cases](https://www.anthropic.com/engineering/building-effective-agents) in agentic systems: 
 
 - Routing easy questions to smaller, cheaper models and hard questions to larger ones
 - Directing different query types (billing, technical, account) to specialized sub-agents
 - Filtering out malicious or out-of-scope inputs before they enter the system
+
+I decided to do this by building a workflow that could classify an incoming user query, route it to the appropriate downstream process, and format the response in a way that matched the nature of the question. 
 
 ---
 
